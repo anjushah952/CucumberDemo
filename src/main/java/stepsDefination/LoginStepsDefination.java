@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
+import java.util.Map;
 
 public class LoginStepsDefination {
 
@@ -39,9 +40,13 @@ public class LoginStepsDefination {
 //	 //2. \"(.*)\"
     @Then("^user enter username and password$")
     public void user_enter_s_username_and_password(DataTable dataTable) {
-        List<List<String>> data = dataTable.raw();
-        webDriver.findElement(By.xpath("//input[@id='email']")).sendKeys(data.get(0).get(0));
-        webDriver.findElement(By.xpath("//input[@id='pass']")).sendKeys(data.get(0).get(1));
+        List<Map<String,String>> datas = dataTable.asMaps(String.class,String.class);
+
+        for (Map<String,String> data : datas){
+            webDriver.findElement(By.xpath("//input[@id='email']")).sendKeys(data.get("username"));
+            webDriver.findElement(By.xpath("//input[@id='pass']")).sendKeys(data.get("password"));
+        }
+
 
 
     }
@@ -54,10 +59,14 @@ public class LoginStepsDefination {
 
     @Then("^user is in home page$")
     public void users_enter_home_page(DataTable dataTable) {
-        List<List<String>> data = dataTable.raw();
-        String username = webDriver.findElements(By.xpath("//div[@class='linkWrap noCount' and @dir='ltr']")).get(0).getText();
-        Assert.assertEquals(data.get(0).get(0),username);
-    }
+        List<Map<String,String>> datas = dataTable.asMaps(String.class,String.class);
+
+        for (Map<String,String> data : datas){
+            String username = webDriver.findElements(By.xpath("//div[@class='linkWrap noCount' and @dir='ltr']")).get(0).getText();
+            Assert.assertEquals(data.get("userId"),username);
+        }
+        }
+
 
     @Then("^users logout$")
     public void users_logout() {

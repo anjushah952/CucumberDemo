@@ -27,10 +27,12 @@ Feature: Crm login feature
     Given user is in login page
     When title of the page is crm login page
     Then user enter username and password
+      |username| password|
       | abc | **** |
       |xyz    | **** |
     Then user clicks login button
     Then  user is in home page
+      |userId|
       |  1235   |
       | 4567|
     Then users logout
