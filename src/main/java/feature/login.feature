@@ -18,5 +18,5 @@ Feature: Crm login feature
 
     Examples:
     | username | password | userid |
-    | abc | **** | 123   |
-    |xyz    | **** | 456|
+    | abc | **** | 1235   |
+    |xyz    | **** | 4567|
