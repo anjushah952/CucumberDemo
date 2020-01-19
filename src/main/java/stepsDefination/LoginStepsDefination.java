@@ -1,5 +1,6 @@
 package stepsDefination;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -9,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.List;
 
 public class LoginStepsDefination {
 
@@ -34,10 +37,11 @@ public class LoginStepsDefination {
     //Reg Exp:
 //	 //1. \"([^\"]*)\"
 //	 //2. \"(.*)\"
-    @Then("^user enter's \"(.*)\" and \"(.*)\"$")
-    public void user_enter_s_username_and_password(String username,String password) {
-        webDriver.findElement(By.xpath("//input[@id='email']")).sendKeys(username);
-        webDriver.findElement(By.xpath("//input[@id='pass']")).sendKeys(password);
+    @Then("^user enter username and password$")
+    public void user_enter_s_username_and_password(DataTable dataTable) {
+        List<List<String>> data = dataTable.raw();
+        webDriver.findElement(By.xpath("//input[@id='email']")).sendKeys(data.get(0).get(0));
+        webDriver.findElement(By.xpath("//input[@id='pass']")).sendKeys(data.get(0).get(1));
 
 
     }
@@ -48,10 +52,11 @@ public class LoginStepsDefination {
 
     }
 
-    @Then("^\"(.*)\" enter home page$")
-    public void users_enter_home_page(String userId) {
+    @Then("^user is in home page$")
+    public void users_enter_home_page(DataTable dataTable) {
+        List<List<String>> data = dataTable.raw();
         String username = webDriver.findElements(By.xpath("//div[@class='linkWrap noCount' and @dir='ltr']")).get(0).getText();
-        Assert.assertEquals(userId,username);
+        Assert.assertEquals(data.get(0).get(0),username);
     }
 
     @Then("^users logout$")
